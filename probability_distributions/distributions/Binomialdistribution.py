@@ -1,6 +1,6 @@
 import math
 import matplotlib.pyplot as plt
-from . import Distribution
+from .Generaldistribution import Distribution
 
 class Binomial(Distribution):
     """ Binomial distribution class for calculating and 
@@ -16,7 +16,7 @@ class Binomial(Distribution):
     def __init__(self, p=0.7, n=100):
         Distribution.__init__(self,  self.calculate_mean(), self.calculate_stdev())
         self.p = p
-        self.n =n
+        self.n = n
     
     def calculate_mean(self):
         
