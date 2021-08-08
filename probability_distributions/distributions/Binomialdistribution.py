@@ -14,9 +14,9 @@ class Binomial(Distribution):
                 
     """
     def __init__(self, p=0.7, n=100):
-        Distribution.__init__(self,  self.calculate_mean(), self.calculate_stdev())
         self.p = p
         self.n = n
+        Distribution.__init__(self,  self.calculate_mean(), self.calculate_stdev())
     
     def calculate_mean(self):
         
@@ -59,7 +59,8 @@ class Binomial(Distribution):
         self.n = len(self.data)
         self.p = sum(self.data)/len(self.data)
         self.mean = self.calculate_mean()
-        self.stdev = self.calculate_stdev()  
+        self.stdev = self.calculate_stdev()
+        return self.p, self.n  
     
     def plot_bar(self):
         """Function to output a histogram of the instance variable data using 
@@ -141,7 +142,7 @@ class Binomial(Distribution):
 
         binomial = Binomial()
         binomial.p = self.p
-        binomial.n = self.p + self.n
+        binomial.n = self.n + other.n
         binomial.mean = binomial.calculate_mean()
         binomial.stdev = binomial.calculate_stdev()
         return binomial    

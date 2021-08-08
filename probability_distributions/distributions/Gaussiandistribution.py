@@ -13,7 +13,6 @@ class Gaussian(Distribution):
 			
 	"""
 	def __init__(self, mu=0, sigma=1):
-		
 		Distribution.__init__(self, mu, sigma)
 
 	
@@ -48,25 +47,19 @@ class Gaussian(Distribution):
 			float: standard deviation of the data set
 	
 		"""
-
 		if sample:
 			n = len(self.data) - 1
 		else:
 			n = len(self.data)
-	
-		mean = self.mean
-	
-		sigma = 0
-	
-		for d in self.data:
-			sigma += (d - mean) ** 2
 		
-		sigma = math.sqrt(sigma / n)
-	
-		self.stdev = sigma
+		summation = 0
+		for datum in self.data:
+			summation += (datum - self.mean)**2
+		
+		summation_avg = summation/n
+		self.stdev = math.sqrt(summation_avg)
 		
 		return self.stdev
-		
 
 	def read_data_file(self, file_name, sample=True):
 	
@@ -122,9 +115,17 @@ class Gaussian(Distribution):
 		Returns:
 			float: probability density function output
 		"""
-		
-		return (1.0 / (self.stdev * math.sqrt(2*math.pi))) * math.exp(-0.5*((x - self.mean) / self.stdev) ** 2)
-		
+		variance = self.stdev**2
+        
+			# PDF formula can be sort of split into two part where 
+			# first part is multiplied with exponential of the second part
+		first_part = 1/(math.sqrt(2*math.pi*variance)) 
+		second_part = -(x - self.mean)**2 / 2*(variance)
+
+		pdf =  first_part * math.exp(second_part)
+			
+		return pdf
+			
 
 	def plot_histogram_pdf(self, n_spaces = 50):
 
